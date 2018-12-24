@@ -1,0 +1,33 @@
+{
+  "name": "firestate",
+  "version": "0.1.0",
+  "description": "A state management tool for Firebase and React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebrelbug/firestate.git"
+  },
+  "keywords": [
+    "redux",
+    "firebase",
+    "state",
+    "management",
+    "store",
+    "dispatch"
+  ],
+  "author": "Ben Gubler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nebrelbug/firestate/issues"
+  },
+  "homepage": "https://github.com/nebrelbug/firestate#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "standard": "^12.0.1",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
