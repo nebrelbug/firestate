@@ -4,7 +4,11 @@
   "description": "A state management tool for Firebase and React",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "standard 'src/*.js' && mocha",
+      "build:dev": "webpack",
+      "build:prod": "webpack --env.production",
+      "build": "npm run build:dev && npm run build:prod",
+      "format": "standard --fix 'src/*.js'"
   },
   "repository": {
     "type": "git",
@@ -29,5 +33,11 @@
     "standard": "^12.0.1",
     "webpack": "^4.28.2",
     "webpack-cli": "^3.1.2"
+  },
+  "standard": {
+    "ignore": [
+      "test/*.js",
+      "dist/*.js"
+    ]
   }
 }
