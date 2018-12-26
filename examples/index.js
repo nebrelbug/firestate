@@ -1,4 +1,4 @@
 var { dispatch, use } = require('../dist/firestate.dev.js')
 
-dispatch('hi', {})
-use({ hi: function () { console.log('hi reducer called') } })
+use(require('./reducers.js'))
+dispatch('ADD_TODO', { name: 'Buy milk', date: 'Tomorrow' })

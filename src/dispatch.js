@@ -1,5 +1,5 @@
-export default function dispatch (actionName, data) {
-  console.log('called dispatch')
+export function dispatch (actionName, data) {
+  console.log('Dispatching event "' + actionName + '"')
   reducers[actionName](data)
 }
 
@@ -8,7 +8,7 @@ export var reducers = {
 }
 
 export function use (reducerObject) {
-  console.log('called dispatch.use')
+  console.log('Using reducers')
   for (var key in reducerObject) {
     if (reducerObject.hasOwnProperty(key)) {
       reducers[key] = reducerObject[key]
@@ -17,6 +17,6 @@ export function use (reducerObject) {
 }
 
 export function clear () {
-  console.log('called dispatch.clear')
   reducers = {}
+  console.log('Cleared all reducers')
 }

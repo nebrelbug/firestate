@@ -100,17 +100,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!*************************!*\
   !*** ./src/dispatch.js ***!
   \*************************/
-/*! exports provided: default, reducers, use, clear */
+/*! exports provided: dispatch, reducers, use, clear */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return dispatch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dispatch", function() { return dispatch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reducers", function() { return reducers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "use", function() { return use; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clear", function() { return clear; });
 function dispatch (actionName, data) {
-  console.log('called dispatch')
+  console.log('Dispatching event "' + actionName + '"')
   reducers[actionName](data)
 }
 
@@ -119,7 +119,7 @@ var reducers = {
 }
 
 function use (reducerObject) {
-  console.log('called dispatch.use')
+  console.log('Using reducers')
   for (var key in reducerObject) {
     if (reducerObject.hasOwnProperty(key)) {
       reducers[key] = reducerObject[key]
@@ -128,8 +128,8 @@ function use (reducerObject) {
 }
 
 function clear () {
-  console.log('called dispatch.clear')
   reducers = {}
+  console.log('Cleared all reducers')
 }
 
 
@@ -139,17 +139,19 @@ function clear () {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: reducers, use, clear */
+/*! exports provided: dispatch, use, clear, reducers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dispatch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dispatch */ "./src/dispatch.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reducers", function() { return _dispatch__WEBPACK_IMPORTED_MODULE_0__["reducers"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dispatch", function() { return _dispatch__WEBPACK_IMPORTED_MODULE_0__["dispatch"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "use", function() { return _dispatch__WEBPACK_IMPORTED_MODULE_0__["use"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "clear", function() { return _dispatch__WEBPACK_IMPORTED_MODULE_0__["clear"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reducers", function() { return _dispatch__WEBPACK_IMPORTED_MODULE_0__["reducers"]; });
 
 
 
