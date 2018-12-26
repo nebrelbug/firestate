@@ -109,8 +109,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reducers", function() { return reducers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "use", function() { return use; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clear", function() { return clear; });
+/* harmony import */ var _listeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./listeners */ "./src/listeners.js");
+
+
 function dispatch (actionName, data) {
   console.log('Dispatching event "' + actionName + '"')
+  if (typeof _listeners__WEBPACK_IMPORTED_MODULE_0__["listeners"][actionName] === 'object') {
+    var shallowListeners = _listeners__WEBPACK_IMPORTED_MODULE_0__["listeners"][actionName].slice()
+    var numOfCallbacks = shallowListeners.length
+    for (var i = 0; i < numOfCallbacks; i++) {
+      var currentListener = shallowListeners[i]
+      if (currentListener && currentListener.callback) {
+        currentListener.callback(data)
+      }
+    }
+  }
   reducers[actionName](data)
 }
 
@@ -139,7 +152,7 @@ function clear () {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: dispatch, use, clear, reducers */
+/*! exports provided: dispatch, use, clear, reducers, listeners, subscribe, unsubscribe, subscribed */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -153,7 +166,80 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reducers", function() { return _dispatch__WEBPACK_IMPORTED_MODULE_0__["reducers"]; });
 
+/* harmony import */ var _listeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./listeners */ "./src/listeners.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "listeners", function() { return _listeners__WEBPACK_IMPORTED_MODULE_1__["listeners"]; });
 
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribe", function() { return _listeners__WEBPACK_IMPORTED_MODULE_1__["subscribe"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unsubscribe", function() { return _listeners__WEBPACK_IMPORTED_MODULE_1__["unsubscribe"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subscribed", function() { return _listeners__WEBPACK_IMPORTED_MODULE_1__["subscribed"]; });
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/listeners.js":
+/*!**************************!*\
+  !*** ./src/listeners.js ***!
+  \**************************/
+/*! exports provided: listeners, subscribe, unsubscribe, subscribed */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "listeners", function() { return listeners; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "subscribe", function() { return subscribe; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unsubscribe", function() { return unsubscribe; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "subscribed", function() { return subscribed; });
+// This code is largely derived from krasimir's EventBus. All credit goes to them.
+
+var listeners = {
+
+}
+
+function subscribe (eventName, callback) {
+  if (typeof listeners[eventName] !== 'undefined') {
+    listeners[eventName].push({ callback: callback }) // Storing it in an object, just in case new features are added
+  } else {
+    listeners[eventName] = [{ callback: callback }]
+  }
+}
+
+function unsubscribe (eventName, callback) {
+  if (typeof listeners[eventName] !== 'undefined') {
+    var eventListenersLength = listeners[eventName].length
+    var newArray = []
+    for (var i = 0; i < eventListenersLength; i++) {
+      var currentListener = listeners[eventName][i]
+      if (currentListener.callback == callback) { // eslint-disable-line eqeqeq
+        // Then this is the listener we want to remove
+        // We won't push it to the new array
+      } else {
+        newArray.push(currentListener)
+      }
+    }
+    listeners[eventName] = newArray
+  }
+}
+
+function subscribed (eventName, callback) {
+  if (typeof listeners[eventName] !== 'undefined') {
+    var numOfCallbacks = listeners[eventName].length
+    if (callback === undefined) { // If we're just checking if it has listeners, like subscribed("EVENT")
+      return numOfCallbacks > 0
+    }
+    for (var i = 0; i < numOfCallbacks; i++) {
+      var currentListener = listeners[eventName][i]
+      if (currentListener.callback == callback) { // eslint-disable-line eqeqeq
+        return true
+      }
+    }
+  }
+  return false // There are no listeners for this event
+}
 
 
 /***/ })
